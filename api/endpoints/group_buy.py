@@ -30,3 +30,12 @@ async def _(
     # add_user: ...
 ) -> ... :
     pass
+
+@router.post('/test_payment/{group_buy_id}')
+async def _(
+    group_buy_id: int,
+
+    uow: uow
+    # test_payment: ...
+) -> None :
+    pass
