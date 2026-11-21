@@ -1,24 +1,33 @@
 from dataclasses import dataclass
+from datetime import datetime
+from decimal import Decimal
+from typing import Optional
+
 from ._base import BaseDataclass
-from .group_buy import GroupBuyDTO
-from ..enums import UserRole
+from ..enums import TransactionType
 
-@dataclass()
-class AuthUserDTO(BaseDataclass):
-    login: str
-    password: str
 
-@dataclass()
+@dataclass
+class WalletDTO(BaseDataclass):
+    """Информация о кошельке пользователя."""
+    user_id: int
+    balance: Decimal
+
+
+@dataclass
+class TransactionDTO(BaseDataclass):
+    """Информация о транзакции."""
+    id: int
+    user_id: int
+    order_id: Optional[int]
+    type: TransactionType
+    amount: Decimal
+    created_at: datetime
+
+
+@dataclass
 class UserDTO(BaseDataclass):
-    id: str
-    login: str
-    password: str
-    role: UserRole
-
-    group_buys: list[GroupBuyDTO]
-
-@dataclass()
-class UpdateUserDTO(BaseDataclass):
-    login: str
-    password: str
-    role: UserRole
+    """Базовая информация о пользователе."""
+    id: int
+    name: str
+    created_at: datetime
