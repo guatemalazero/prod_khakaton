@@ -12,8 +12,7 @@ class PricingRuleResponse(BaseSchema):
 
 
 class ProductResponse(BaseSchema):
-    """Ответ для списка товаров."""
-    id: int
+    id: str
     name: str
     regular_price: Decimal
     base_group_price: Decimal
@@ -22,8 +21,7 @@ class ProductResponse(BaseSchema):
 
 
 class ProductDetailResponse(BaseSchema):
-    """Ответ для детальной карточки товара."""
-    id: int
+    id: str
     name: str
     description: Optional[str]
     regular_price: Decimal

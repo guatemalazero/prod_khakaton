@@ -9,17 +9,15 @@ from ..enums import TransactionType
 
 @dataclass
 class WalletDTO(BaseDataclass):
-    """Информация о кошельке пользователя."""
-    user_id: int
+    user_id: str
     balance: Decimal
 
 
 @dataclass
 class TransactionDTO(BaseDataclass):
-    """Информация о транзакции."""
-    id: int
-    user_id: int
-    order_id: Optional[int]
+    id: str
+    user_id: str
+    order_id: Optional[str]
     type: TransactionType
     amount: Decimal
     created_at: datetime
@@ -27,7 +25,6 @@ class TransactionDTO(BaseDataclass):
 
 @dataclass
 class UserDTO(BaseDataclass):
-    """Базовая информация о пользователе."""
-    id: int
+    id: str
     name: str
     created_at: datetime

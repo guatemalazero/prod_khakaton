@@ -13,30 +13,25 @@ router = APIRouter(prefix='/orders', tags=['Orders'])
 
 
 @router.post('/{group_id}', response_model=OrderResponse)
-async def _(
-    group_id: int,
+async def create_order(
+    group_id: str,
     data: OrderCreateRequest,
     user_id: current_user_id,
     uow: uow,
     create_order: create_order_uc,
 ) -> OrderResponse:
-    
-    # Pydantic → Dataclass
     dto = OrderCreateDTO(
         idempotency_key=data.idempotency_key,
         product_id=data.product_id,
     )
-    
     order = await create_order(uow, user_id, group_id, dto)
-    
     return OrderResponse.model_validate(order)
 
 
 @router.post('/{order_id}/pay', status_code=204)
-async def _(
-    order_id: int,
+async def pay_order(
+    order_id: str,
     uow: uow,
     pay_order: pay_order_uc,
 ) -> None:
-    
     await pay_order(uow, order_id)

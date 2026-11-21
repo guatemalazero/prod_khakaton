@@ -1,27 +1,27 @@
 from datetime import datetime
 from decimal import Decimal
-from typing import Optional, List
+from typing import Optional
 
 from ._base import BaseSchema
 
 
 class WalletResponse(BaseSchema):
-    user_id: int
+    user_id: str
     balance: Decimal
 
 
 class TransactionResponse(BaseSchema):
-    id: int
-    user_id: int
-    order_id: Optional[int]
-    type: str  # 'DEPOSIT' | 'PAYMENT' | 'REFUND' | 'REWARD'
+    id: str
+    user_id: str
+    order_id: Optional[str]
+    type: str
     amount: Decimal
     created_at: datetime
 
 
 class OrderListItemResponse(BaseSchema):
-    id: int
-    group_id: int
+    id: str
+    group_id: str
     product_name: str
     fixed_price: Decimal
     status: str
@@ -30,11 +30,11 @@ class OrderListItemResponse(BaseSchema):
 
 
 class UserGroupPurchaseResponse(BaseSchema):
-    id: int
+    id: str
     product_name: str
     status: str
-    role: str  # 'ORGANIZER' | 'PARTICIPANT'
+    role: str
     current_joined_count: int
     target_size: int
     expires_at: datetime
-    invite_code: Optional[str]  # Только для организатора
+    invite_code: Optional[str]

@@ -1,8 +1,12 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
-from .repos.user import UsersRepo
-from .repos.group_buy import GroupBuyRepo
-from .repos.items import ItemsRepo
+from .repos.group_participants import GroupParticipantRepository
+from .repos.group_purchases import GroupPurchaseRepository
+from .repos.orders import OrderRepository
+from .repos.products import ProductRepository
+from .repos.transactions import TransactionRepository
+from .repos.users import UserRepository
+from .repos.wallets import WalletRepository
 
 
 class UnitOfWork:
@@ -17,18 +21,24 @@ class UnitOfWork:
     async def __aenter__(self) -> 'UnitOfWork':
         self._async_session = self._session_factory()
 
-        self.users = UsersRepo(self._async_session)
-        self.group_buy = GroupBuyRepo(self._async_session)
-        self.items = ItemsRepo(self._async_session)
+        self.users = UserRepository(self._async_session)
+        self.wallets = WalletRepository(self._async_session)
+        self.products = ProductRepository(self._async_session)
+        self.group_purchases = GroupPurchaseRepository(self._async_session)
+        self.group_participants = GroupParticipantRepository(self._async_session)
+        self.orders = OrderRepository(self._async_session)
+        self.transactions = TransactionRepository(self._async_session)
 
         return self
 
-    
     async def __aexit__(self, exc_type, exc, tb) -> None:
         if exc:
             await self._async_session.rollback()
-        
+
         await self._async_session.close()
 
     async def commit(self) -> None:
         await self._async_session.commit()
+
+    async def rollback(self) -> None:
+        await self._async_session.rollback()

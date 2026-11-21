@@ -7,8 +7,7 @@ from ._base import BaseDataclass
 
 @dataclass
 class ProductDTO(BaseDataclass):
-    """Для списка товаров на витрине."""
-    id: int
+    id: str
     name: str
     regular_price: Decimal
     base_group_price: Decimal
@@ -18,8 +17,7 @@ class ProductDTO(BaseDataclass):
 
 @dataclass
 class ProductDetailDTO(BaseDataclass):
-    """Для детальной карточки товара."""
-    id: int
+    id: str
     name: str
     description: Optional[str]
     regular_price: Decimal

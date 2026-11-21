@@ -8,19 +8,17 @@ from ._base import BaseSchema
 
 
 class OrderCreateRequest(BaseSchema):
-    """Запрос на создание заказа."""
-    idempotency_key: str = Field(..., min_length=1, max_length=64)
-    product_id: int
+    idempotency_key: str = Field(..., min_length=1, max_length=64, description="Ключ идемпотентности")
+    product_id: str
 
 
 class OrderResponse(BaseSchema):
-    """Ответ с информацией о заказе."""
-    id: int
-    group_id: int
-    user_id: int
-    product_id: int
+    id: str
+    group_id: str
+    user_id: str
+    product_id: str
     fixed_price: Decimal
-    status: str  # 'PENDING' | 'PAID' | 'REFUNDED'
+    status: str
     idempotency_key: Optional[str]
     created_at: datetime
     paid_at: Optional[datetime]

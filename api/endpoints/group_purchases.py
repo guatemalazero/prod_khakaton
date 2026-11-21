@@ -18,45 +18,37 @@ router = APIRouter(prefix='/group-purchases', tags=['Group Purchases'])
 
 
 @router.post('/', response_model=GroupPurchaseResponse)
-async def _(
-    data: GroupPurchaseCreateRequest,  # ← Pydantic на входе
+async def create_group_purchase(
+    data: GroupPurchaseCreateRequest,
     user_id: current_user_id,
     uow: uow,
     create_group_purchase: create_group_purchase_uc,
 ) -> GroupPurchaseResponse:
-    
-    # Pydantic → Dataclass перед передачей в usecase
     dto = GroupPurchaseCreateDTO(
         product_id=data.product_id,
         target_size=data.target_size,
         time_limit_minutes=data.time_limit_minutes,
     )
-    
     group = await create_group_purchase(uow, user_id, dto)
-    
     return GroupPurchaseResponse.model_validate(group)
 
 
 @router.get('/{group_id}', response_model=GroupPurchaseResponse)
-async def _(
-    group_id: int,
+async def get_group_purchase(
+    group_id: str,
     uow: uow,
     get_group_purchase: get_group_purchase_uc,
 ) -> GroupPurchaseResponse:
-    
     group = await get_group_purchase(uow, group_id)
-    
     return GroupPurchaseResponse.model_validate(group)
 
 
 @router.post('/join', response_model=GroupPurchaseResponse)
-async def _(
+async def join_group_purchase(
     data: JoinGroupPurchaseRequest,
     user_id: current_user_id,
     uow: uow,
     join_group_purchase: join_group_purchase_uc,
 ) -> GroupPurchaseResponse:
-    
     group = await join_group_purchase(uow, user_id, data.invite_code)
-    
     return GroupPurchaseResponse.model_validate(group)

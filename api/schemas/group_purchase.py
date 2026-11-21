@@ -8,18 +8,16 @@ from ._base import BaseSchema
 
 
 class GroupPurchaseCreateRequest(BaseSchema):
-    """Запрос на создание закупки."""
-    product_id: int
+    product_id: str
     target_size: int = Field(..., ge=2, le=100, description="Сколько участников нужно")
     time_limit_minutes: int = Field(..., ge=1, le=1440, description="Лимит времени в минутах")
 
 
 class GroupPurchaseResponse(BaseSchema):
-    """Ответ с информацией о закупке."""
-    id: int
-    product_id: int
-    organizer_id: int
-    status: str  # 'ACTIVE' | 'SUCCESS' | 'CANCELED'
+    id: str
+    product_id: str
+    organizer_id: str
+    status: str
     target_size: int
     current_joined_count: int
     current_paid_count: int
@@ -31,5 +29,4 @@ class GroupPurchaseResponse(BaseSchema):
 
 
 class JoinGroupPurchaseRequest(BaseSchema):
-    """Запрос на вступление в закупку."""
-    invite_code: str = Field(..., min_length=1, max_length=32)
+    invite_code: str = Field(..., min_length=1, max_length=32, description="Код приглашения")
