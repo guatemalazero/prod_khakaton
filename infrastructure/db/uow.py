@@ -1,5 +1,9 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
+from .repos.user import UsersRepo
+from .repos.group_buy import GroupBuyRepo
+from .repos.items import ItemsRepo
+
 
 class UnitOfWork:
     def __init__(
@@ -12,6 +16,10 @@ class UnitOfWork:
 
     async def __aenter__(self) -> 'UnitOfWork':
         self._async_session = self._session_factory()
+
+        self.users = UsersRepo(self._async_session)
+        self.group_buy = GroupBuyRepo(self._async_session)
+        self.items = ItemsRepo(self._async_session)
 
         return self
 

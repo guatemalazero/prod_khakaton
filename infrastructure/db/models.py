@@ -4,7 +4,7 @@ from typing import Annotated
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ._service.base import Base
-from ...domain.enums import GroupBuyStatus
+from ...domain.enums import GroupBuyStatus, UserRole
 
 pk = Annotated[str, mapped_column(primary_key=True, default=lambda: str(secrets.token_urlsafe(5)))]
 
@@ -15,6 +15,8 @@ class User(Base):
     id: Mapped[pk]
     login: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
+
+    role: Mapped[str] = mapped_column(default=UserRole.USER)
 
     # Список групповых закупок, в которых участвует пользователь
     group_buys: Mapped[list["GroupBuy"]] = relationship(

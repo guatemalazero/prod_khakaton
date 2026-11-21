@@ -8,7 +8,7 @@ class GroupBuyDTO(BaseDataclass):
     id: str
     status: GroupBuyStatus
     current_people_count: int
-    current_money_count: str
+    current_money_count: int
 
     item_id: str
     url: str
@@ -18,5 +18,3 @@ class GroupBuyDTO(BaseDataclass):
 class GroupBuyTermsDTO(BaseDataclass):
     id: str
     people_count: int
-
-cl = GroupBuyDTO()
